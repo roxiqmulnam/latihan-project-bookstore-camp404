@@ -1,15 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TabelBuku from "./TabelBuku";
+import axios from "axios";
 
 const ManajemenBuku = () => {
   const [formMode, setFormMode] = useState("");
+  const [books, setBooks] = useState([]);
 
   const showCreateForm = () => {
     setFormMode("show");
   };
 
   function showEditForm() {
-    setFormMode('show')
+    setFormMode("show");
+  }
+
+  useEffect(() => {
+    retrieveData();
+  }, []);
+
+  function retrieveData() {
+    axios
+      .get("http://localhost:4000/book")
+      .then((response) => {
+        setBooks(response.data);
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
   }
 
   return (
@@ -51,6 +68,7 @@ const ManajemenBuku = () => {
         </div>
       )}
       <TabelBuku showEdit={showEditForm} />
+      <p>{JSON.stringify(books)} </p>
     </div>
   );
 };
