@@ -1,5 +1,5 @@
 const akses = require("express").Router();
-const BukuModel = require("./model");
+const BukuModel = require("./model.js");
 
 akses.route("/").get((req, res) => {
   BukuModel.find()
